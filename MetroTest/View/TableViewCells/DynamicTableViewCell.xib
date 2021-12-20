@@ -128,7 +128,6 @@
                     </imageView>
                 </subviews>
                 <viewLayoutGuide key="safeArea" id="ela-BO-xGf"/>
-                <color key="backgroundColor" name="mainViewColor"/>
                 <constraints>
                     <constraint firstItem="3nd-oQ-fHV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="6Og-G7-xhk"/>
                     <constraint firstAttribute="trailing" secondItem="4bN-nr-fUr" secondAttribute="trailing" constant="20" id="8v6-1r-CNd"/>
@@ -148,6 +147,7 @@
                     <constraint firstItem="AmC-sq-MsZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="25" id="zmT-Ai-y3C"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" name="mainViewColor"/>
             <connections>
                 <outlet property="likeLabel" destination="2Ie-hU-KL0" id="wzi-gq-vUw"/>
                 <outlet property="postImage" destination="ct6-04-hvs" id="3so-Ir-HNM"/>
