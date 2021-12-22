@@ -22,6 +22,12 @@ class DynamicTableViewCell: UITableViewCell {
         }
     }
     
+    var date: String? {
+        didSet {
+            timeLabel.text = date
+        }
+    }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         postImage.isHidden = true
@@ -31,8 +37,6 @@ class DynamicTableViewCell: UITableViewCell {
         postLabel.text = post.text
         repostLabel.text = String(post.retweetCount)
         likeLabel.text = String(post.favoriteCount)
-        timeLabel.text = DateManager.shared.convertDate(from: post.createdAt)
-        postImage.image = NetworkManager.shared.fetchImage(from: post.image)
     }
     
 }

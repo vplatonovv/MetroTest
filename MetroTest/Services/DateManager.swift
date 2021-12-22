@@ -12,23 +12,28 @@ class DateManager {
     static let shared = DateManager()
     private init() {}
     
-    func convertDate(from milliseconds: Int) -> String {
+    func convertDate(from milliseconds: Int) -> String? {
         // when
         let date = Date(milliseconds: milliseconds, region: .current)
         // interval between when and now
         let interval = Int(date.distance(to: Date()))
+        var outputString = ""
         switch milliseconds {
         case 0..<60:
-            return "\(String(interval)) секунд назад"
+            outputString = "секунд назад"
+            return String(interval) + " " + outputString
         case 60..<3600:
-            return "\(String(interval / 60)) минут назад"
+            outputString = "минут назад"
+            return String(interval / 60) + " " + outputString
         case 3600..<86400:
-            return "\(String(interval / 3600)) часов назад"
+            outputString = "часов назад"
+            return String(interval / 3600) + " " + outputString
         case 86400...:
-            return "\(String(interval / 86400)) дней назад"
+            outputString = "дней назад"
+            return String(interval / 86400) + " " + outputString
         default:
             break
         }
-        return "Только что"
+        return nil
     }
 }

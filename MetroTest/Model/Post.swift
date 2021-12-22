@@ -36,7 +36,7 @@ struct Post {
         self.createdAt = createdAt
         self.retweetCount = retweetCount
         self.favoriteCount = favoriteCount
-        if let image = json["mediaEntities"].string {
+        if let image = json["mediaEntities"][0].string {
             self.image = image
         } else {
             image = nil

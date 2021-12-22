@@ -7,10 +7,15 @@
 
 import UIKit
 
+protocol TwitterViewDelegateProtocol: AnyObject {
+    func getConvertData(from data: Int) -> String?
+    func getImage(from string: String?) -> UIImage?
+}
+
 class TwitterViewController: UIViewController {
     
     override func loadView() {
-        view = MainView(frame: UIScreen.main.bounds)
+        view = MainView(frame: UIScreen.main.bounds, delegate: self)
     }
     
     override func viewDidLoad() {
@@ -44,5 +49,14 @@ class TwitterViewController: UIViewController {
             customView.props = props
         }
     }
+}
+
+extension TwitterViewController: TwitterViewDelegateProtocol {
+    func getConvertData(from data: Int) -> String? {
+        DateManager.shared.convertDate(from: data)
+    }
     
+    func getImage(from string: String?) -> UIImage? {
+        NetworkManager.shared.fetchImage(from: string)
+    }
 }

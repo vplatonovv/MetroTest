@@ -9,6 +9,8 @@ import UIKit
 
 class MainView: UIView {
     
+    unowned var delegate: TwitterViewDelegateProtocol
+    
     enum Props {
         case initial
         case loading
@@ -47,7 +49,8 @@ class MainView: UIView {
     
     private var errorView = ErrorView(frame: .zero)
     
-    override init(frame: CGRect) {
+    init(frame: CGRect, delegate: TwitterViewDelegateProtocol) {
+        self.delegate = delegate
         super.init(frame: frame)
         configureView()
         setConstrains()
@@ -148,20 +151,30 @@ extension MainView: UITableViewDelegate, UITableViewDataSource {
             switch indexPath.section {
             case 0:
                 // static cell here
-                let cell = tableView.dequeueReusableCell(withIdentifier: "StaticTableViewCell", for: indexPath) as! StaticTableViewCell
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "StaticTableViewCell", for: indexPath) as? StaticTableViewCell else {
+                    return UITableViewCell()
+                }
                 return cell
             case 1:
                 // dynamic cell here
                 let post = posts[indexPath.row].post
-                let cell = tableView.dequeueReusableCell(withIdentifier: "DynamicTableViewCell", for: indexPath) as! DynamicTableViewCell
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "DynamicTableViewCell", for: indexPath) as? DynamicTableViewCell else {
+                    return UITableViewCell()
+                }
                 cell.configureCell(with: post)
+                if let image = delegate.getImage(from: post.image) {
+                    cell.image = image
+                }
+                if let date = delegate.getConvertData(from: post.createdAt) {
+                    cell.date = date
+                }
                 /*
-                 uncomment to test image
+                 //uncomment to test image
                  if indexPath.row == 3 {
-                     cell.image = UIImage(named: "testImage")
+                 cell.image = UIImage(named: "testImage")
                  }
                  if indexPath.row == 7 {
-                     cell.image = UIImage(named: "testImage")
+                 cell.image = UIImage(named: "testImage")
                  }
                  */
                 return cell
@@ -178,7 +191,7 @@ extension MainView: UITableViewDelegate, UITableViewDataSource {
         if case .loaded(let posts) = props {
             let post = posts[indexPath.row]
             post.onSelect()
+            tableView.deselectRow(at: indexPath, animated: true)
         }
-        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
