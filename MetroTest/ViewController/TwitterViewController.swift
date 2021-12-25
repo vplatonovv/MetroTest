@@ -30,22 +30,22 @@ class TwitterViewController: UIViewController {
             switch result {
             case .success(let posts):
                 let post = posts.map { post in
-                    MainView.Props.Posts(post: post, onSelect: { print("Go to twitter with \(post)") } )
+                    MainView.ViewState.Props.Posts(post: post, onSelect: { print("Go to twitter with \(post)") } )
                 }
                 self?.updateView(with: .loaded(post))
             case .failure(let error):
                 print(error)
                 let reload = { [weak self] in
                     self?.fetchPosts()
-                    self?.updateView(with: MainView.Props.loading)
+                    self?.updateView(with: MainView.ViewState.Props.loading)
                 }
-                self?.updateView(with: .error(MainView.Props.Error(action: reload)))
+                self?.updateView(with: .error(MainView.ViewState.Props.Error(action: reload)))
             }
         }
     }
     
-    private func updateView(with props: MainView.Props) {
-        if let customView = self.view as? MainView {
+    private func updateView(with props: MainView.ViewState.Props) {
+        if let customView = view as? MainView {
             customView.props = props
         }
     }

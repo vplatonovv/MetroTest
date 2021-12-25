@@ -11,23 +11,25 @@ class MainView: UIView {
     
     unowned var delegate: TwitterViewDelegateProtocol
     
-    enum Props {
-        case initial
-        case loading
-        case loaded([Posts])
-        case error(Error)
+    struct ViewState {
         
-        struct Posts {
-            let post: Post
-            let onSelect: () -> ()
-        }
-        
-        struct Error {
-            let action: () -> ()?
+        enum Props {
+            case loading
+            case loaded([Posts])
+            case error(Error)
+            
+            struct Posts {
+                let post: Post
+                let onSelect: () -> ()
+            }
+            
+            struct Error {
+                let action: () -> ()?
+            }
         }
     }
     
-    var props: Props = .initial {
+    var props: ViewState.Props = .loading {
         didSet {
             setNeedsLayout()
         }
@@ -39,10 +41,9 @@ class MainView: UIView {
         tableView.delegate = self
         tableView.backgroundColor = UIColor(named: "mainViewColor")
         tableView.separatorStyle = .none
-        tableView.register(UINib(nibName: "StaticTableViewCell", bundle: nil), forCellReuseIdentifier: "StaticTableViewCell")
-        tableView.register(UINib(nibName: "DynamicTableViewCell", bundle: nil), forCellReuseIdentifier: "DynamicTableViewCell")
+        tableView.register(StaticTableViewCell.nibName, forCellReuseIdentifier: StaticTableViewCell.identifier)
+        tableView.register(DynamicTableViewCell.nibName, forCellReuseIdentifier: DynamicTableViewCell.identifier)
         return tableView
-        
     }()
     
     private var loadingView = LoadinView(frame: .zero)
@@ -63,12 +64,6 @@ class MainView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         switch props {
-            
-        case .initial:
-            loadingView.isHidden = true
-            tableView.isHidden = true
-            errorView.isHidden = true
-            print("is inital")
         case .loading:
             loadingView.isHidden = false
             loadingView.startAnimating()

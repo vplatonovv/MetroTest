@@ -16,6 +16,7 @@
 		952F41E4276F5CFD00116E80 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 952F41E2276F5CFD00116E80 /* LaunchScreen.storyboard */; };
 		952F41EC276F5DD300116E80 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F41EB276F5DD300116E80 /* Post.swift */; };
 		952F41EF276F61AA00116E80 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952F41EE276F61AA00116E80 /* NetworkManager.swift */; };
+		953BD13E2774DAFD0096170E /* Extension + TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953BD13D2774DAFD0096170E /* Extension + TableViewCell.swift */; };
 		955723DF276FCC9D0043E4CE /* ErrorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 955723DE276FCC9D0043E4CE /* ErrorView.xib */; };
 		955723E1276FD0FA0043E4CE /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955723E0276FD0FA0043E4CE /* ErrorView.swift */; };
 		955723E3276FD18B0043E4CE /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 955723E2276FD18B0043E4CE /* LoadingView.xib */; };
@@ -42,6 +43,7 @@
 		952F41E5276F5CFD00116E80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		952F41EB276F5DD300116E80 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		952F41EE276F61AA00116E80 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		953BD13D2774DAFD0096170E /* Extension + TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + TableViewCell.swift"; sourceTree = "<group>"; };
 		955723DE276FCC9D0043E4CE /* ErrorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ErrorView.xib; sourceTree = "<group>"; };
 		955723E0276FD0FA0043E4CE /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		955723E2276FD18B0043E4CE /* LoadingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				9528885D277068D900E2538B /* Extension + UIView.swift */,
+				953BD13D2774DAFD0096170E /* Extension + TableViewCell.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				952F41DA276F5CFC00116E80 /* SceneDelegate.swift in Sources */,
 				95811AF5276F82EB007C316B /* DynamicTableViewCell.swift in Sources */,
 				95811AEF276F827F007C316B /* StaticTableViewCell.swift in Sources */,
+				953BD13E2774DAFD0096170E /* Extension + TableViewCell.swift in Sources */,
 				952F41EC276F5DD300116E80 /* Post.swift in Sources */,
 				955723E1276FD0FA0043E4CE /* ErrorView.swift in Sources */,
 			);
