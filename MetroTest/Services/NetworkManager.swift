@@ -45,14 +45,4 @@ class NetworkManager {
             }
         }.resume()
     }
-    
-    func fetchImage(from url: String?) -> UIImage? {
-        guard let url = url else { return nil }
-        if let url = URL(string: url) {
-            let imageView = UIImageView()
-            imageView.sd_setImage(with: url, completed: nil)
-            return imageView.image
-        }
-        return nil
-    }
 }

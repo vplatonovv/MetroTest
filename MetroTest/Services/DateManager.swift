@@ -23,7 +23,7 @@ class DateManager {
             outputString = "секунд назад"
             return String(interval) + " " + outputString
         case 60..<3600:
-            outputString = "минут назад"
+            outputString = "минуту назад"
             return String(interval / 60) + " " + outputString
         case 3600..<86400:
             outputString = "часов назад"

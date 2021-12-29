@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class MainView: UIView {
     
@@ -46,7 +47,7 @@ class MainView: UIView {
         return tableView
     }()
     
-    private var loadingView = LoadinView(frame: .zero)
+    private var loadingView = LoadingView(frame: .zero)
     
     private var errorView = ErrorView(frame: .zero)
     
@@ -157,11 +158,11 @@ extension MainView: UITableViewDelegate, UITableViewDataSource {
                     return UITableViewCell()
                 }
                 cell.configureCell(with: post)
-                if let image = delegate.getImage(from: post.image) {
-                    cell.image = image
-                }
                 if let date = delegate.getConvertData(from: post.createdAt) {
                     cell.date = date
+                }
+                if let urlImage = URL(string: post.image ?? "") {
+                    cell.postImage.sd_setImage(with: urlImage, completed: nil)
                 }
                 /*
                  //uncomment to test image

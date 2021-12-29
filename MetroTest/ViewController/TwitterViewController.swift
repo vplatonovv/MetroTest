@@ -9,7 +9,6 @@ import UIKit
 
 protocol TwitterViewDelegateProtocol: AnyObject {
     func getConvertData(from data: Int) -> String?
-    func getImage(from string: String?) -> UIImage?
 }
 
 class TwitterViewController: UIViewController {
@@ -54,9 +53,5 @@ class TwitterViewController: UIViewController {
 extension TwitterViewController: TwitterViewDelegateProtocol {
     func getConvertData(from data: Int) -> String? {
         DateManager.shared.convertDate(from: data)
-    }
-    
-    func getImage(from string: String?) -> UIImage? {
-        NetworkManager.shared.fetchImage(from: string)
     }
 }

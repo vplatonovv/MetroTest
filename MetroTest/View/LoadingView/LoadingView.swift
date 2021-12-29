@@ -1,5 +1,5 @@
 //
-//  LoadinView.swift
+//  LoadingView.swift
 //  MetroTest
 //
 //  Created by Слава Платонов on 19.12.2021.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LoadinView: UIView {
+class LoadingView: UIView {
     
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     
@@ -21,7 +21,7 @@ class LoadinView: UIView {
     }
     
     private func configureView() {
-        guard let view = loadViewFromNib(nibName: "LoadingView") else { return }
+        guard let view = loadViewFromNib(nibName: LoadingView.identifier) else { return }
         view.frame = frame
         addSubview(view)
     }

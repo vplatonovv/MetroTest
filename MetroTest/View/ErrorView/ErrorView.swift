@@ -22,7 +22,7 @@ class ErrorView: UIView {
     }
 
     private func configureView() {
-        guard let view = loadViewFromNib(nibName: "ErrorView") else { return }
+        guard let view = loadViewFromNib(nibName: ErrorView.identifier) else { return }
         view.frame = frame
         addSubview(view)
     }
