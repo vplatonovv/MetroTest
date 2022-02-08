@@ -10,6 +10,12 @@ import SwiftyJSON
 
 struct Post {
     
+    let text: String
+    let createdAt: Date
+    let retweetCount: Int
+    let favoriteCount: Int
+    let image: String?
+    
     static func getAllPostsFromJson(_ json: JSON) -> [Post] {
         var posts: [Post] = []
         json["data"].forEach { _, json in
@@ -19,18 +25,11 @@ struct Post {
         return posts
     }
     
-    let text: String
-    let createdAt: Int
-    let retweetCount: Int
-    let favoriteCount: Int
-    let image: String?
-    
     init(with json: JSON) {
         let text = json["text"].stringValue
-        let createdAt = json["createdAt"].intValue
+        let createdAt = Date(milliseconds: json["createdAt"].intValue)
         let retweetCount = json["retweetCount"].intValue
         let favoriteCount = json["favoriteCount"].intValue
-        //let image = json["mediaEntities"][0].stringValue
         
         self.text = text
         self.createdAt = createdAt

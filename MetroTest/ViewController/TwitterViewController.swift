@@ -8,7 +8,7 @@
 import UIKit
 
 protocol TwitterViewDelegateProtocol: AnyObject {
-    func getConvertData(from data: Int) -> String?
+    func getConvertDate(from date: Date) -> String?
 }
 
 class TwitterViewController: UIViewController {
@@ -25,33 +25,37 @@ class TwitterViewController: UIViewController {
     }
     
     func fetchPosts() {
-        NetworkManager.shared.fetchPosts { [weak self ]result in
+        NetworkManager.shared.fetchPosts { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let posts):
                 let post = posts.map { post in
                     MainView.ViewState.Props.Posts(post: post, onSelect: { print("Go to twitter with \(post)") } )
                 }
-                self?.updateView(with: .loaded(post))
+                self.updateView(with: .loaded(post))
             case .failure(let error):
                 print(error)
-                let reload = { [weak self] in
-                    self?.fetchPosts()
-                    self?.updateView(with: MainView.ViewState.Props.loading)
+                let reload = { [self] in
+                    self.fetchPosts()
+                    self.updateView(with: MainView.ViewState.Props.loading)
                 }
-                self?.updateView(with: .error(MainView.ViewState.Props.Error(action: reload)))
+                sleep(2)
+                self.updateView(with: .error(MainView.ViewState.Props.Error(action: reload)))
             }
         }
     }
     
     private func updateView(with props: MainView.ViewState.Props) {
-        if let customView = view as? MainView {
-            customView.props = props
+        DispatchQueue.main.async {
+            if let customView = self.view as? MainView {
+                customView.state = props
+            }
         }
     }
 }
 
 extension TwitterViewController: TwitterViewDelegateProtocol {
-    func getConvertData(from data: Int) -> String? {
-        DateManager.shared.convertDate(from: data)
+    func getConvertDate(from date: Date) -> String? {
+        DateManager.shared.calculateTime(date: date)
     }
 }

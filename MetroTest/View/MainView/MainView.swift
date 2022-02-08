@@ -10,7 +10,7 @@ import SDWebImage
 
 class MainView: UIView {
     
-    unowned var delegate: TwitterViewDelegateProtocol
+    weak var delegate: TwitterViewDelegateProtocol?
     
     struct ViewState {
         
@@ -30,9 +30,11 @@ class MainView: UIView {
         }
     }
     
-    var props: ViewState.Props = .loading {
+    var state: ViewState.Props = .loading {
         didSet {
-            setNeedsLayout()
+            DispatchQueue.main.async {
+                self.setNeedsLayout()
+            }
         }
     }
     
@@ -64,7 +66,7 @@ class MainView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        switch props {
+        switch state {
         case .loading:
             loadingView.isHidden = false
             loadingView.startAnimating()
@@ -87,7 +89,7 @@ class MainView: UIView {
     }
     
     private func configureView() {
-        guard let view = loadViewFromNib(nibName: "MainView") else { return }
+        guard let view = loadViewFromNib(nibName: MainView.identifier) else { return }
         view.backgroundColor = UIColor(named: "mainViewColor")
         
         view.frame = bounds
@@ -129,7 +131,7 @@ extension MainView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if case .loaded(let posts) = props {
+        if case .loaded(let posts) = state {
             switch section {
             case 0:
                 return 1
@@ -143,22 +145,22 @@ extension MainView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if case .loaded(let posts) = props {
+        if case .loaded(let posts) = state {
             switch indexPath.section {
             case 0:
                 // static cell here
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: "StaticTableViewCell", for: indexPath) as? StaticTableViewCell else {
-                    return UITableViewCell()
+                    return .init()
                 }
                 return cell
             case 1:
                 // dynamic cell here
                 let post = posts[indexPath.row].post
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: "DynamicTableViewCell", for: indexPath) as? DynamicTableViewCell else {
-                    return UITableViewCell()
+                    return .init()
                 }
                 cell.configureCell(with: post)
-                if let date = delegate.getConvertData(from: post.createdAt) {
+                if let date = delegate?.getConvertDate(from: post.createdAt) {
                     cell.date = date
                 }
                 if let urlImage = URL(string: post.image ?? "") {
@@ -175,7 +177,7 @@ extension MainView: UITableViewDelegate, UITableViewDataSource {
                  */
                 return cell
             default:
-                return UITableViewCell()
+                return .init()
             }
         }
         return UITableViewCell()
@@ -184,7 +186,7 @@ extension MainView: UITableViewDelegate, UITableViewDataSource {
     // MARK: TableViewDataSource
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if case .loaded(let posts) = props {
+        if case .loaded(let posts) = state {
             let post = posts[indexPath.row]
             post.onSelect()
             tableView.deselectRow(at: indexPath, animated: true)

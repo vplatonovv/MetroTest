@@ -6,7 +6,6 @@
 //
 
 import SwiftyJSON
-import SDWebImage
 import UIKit
 
 enum NetworkError: Error {
@@ -27,9 +26,7 @@ class NetworkManager {
         }
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data else {
-                DispatchQueue.main.async {
                     completion(.failure(.noData))
-                }
                 return
             }
             do {
@@ -39,9 +36,7 @@ class NetworkManager {
                     completion(.success(posts))
                 }
             } catch {
-                DispatchQueue.main.async {
                     completion(.failure(.noData))
-                }
             }
         }.resume()
     }

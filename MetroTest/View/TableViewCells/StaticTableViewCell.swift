@@ -14,7 +14,8 @@ class StaticTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         shadowView.layer.shadowColor = UIColor.black.cgColor
+        shadowView.layer.shadowOffset = .zero
         shadowView.layer.shadowRadius = 10
-        shadowView.layer.shadowOpacity = 0.10
+        shadowView.layer.shadowOpacity = 0.1
     }
 }
